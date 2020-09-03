@@ -30,7 +30,7 @@ CREATE TABLE departments
         (id)
 );
 
-        CREATE TABLE employee
+        CREATE TABLE employees
         (
             id INT NOT NULL
             AUTO_INCREMENT, 
