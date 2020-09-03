@@ -11,11 +11,10 @@ CREATE TABLE departments
         id INT NOT NULL
         AUTO_INCREMENT,
     name VARCHAR
-        (100) NOT NULL,
-    department_id INT NOT NULL,
+        (30) NOT NULL,
+    
     PRIMARY KEY
-        (id),
-      
+        (id)    
 );
 
         CREATE TABLE roles
@@ -23,7 +22,7 @@ CREATE TABLE departments
                 id INT NOT NULL
                 AUTO_INCREMENT,
   title VARCHAR
-                (100) NOT NULL,
+                (30) NOT NULL,
   salary DECIMAL
                 (10,2) NOT NULL,
   department_id INT NOT NULL,
