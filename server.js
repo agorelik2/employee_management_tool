@@ -96,15 +96,15 @@ function mainMenu() {
       }
     });
 }
-function viewEmployees(){};
-function viewDepartments(){};
-function viewRoles(){};
-function addDepartment(){};
-function addRole(){};
-function addEmployee(){};
-function updateEmployees();
-function viewEmployeesbyManager();
-function updateEmployeesManager();
-function deleteDepartment(){};
-function deleteRole(){};
-function deleteEmployee(){};
+function viewEmployees() {} //"SELECT * FROM employees"
+function viewDepartments() {} //"SELECT * FROM departments"
+function viewRoles() {} //"SELECT * FROM roles"
+function addDepartment() {} //"INSERT INTO departments SET ?",
+function addRole() {} //"INSERT INTO roles SET ?"
+function addEmployee() {} //"INSERT INTO employees SET ?",
+function updateEmployees() {} //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
+function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id"
+function updateEmployeesManager() {}
+function deleteDepartment() {}
+function deleteRole() {}
+function deleteEmployee() {}
