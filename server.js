@@ -96,10 +96,61 @@ function mainMenu() {
       }
     });
 }
+
 function viewEmployees() {} //"SELECT * FROM employees"
-function viewDepartments() {} //"SELECT * FROM departments"
-function viewRoles() {} //"SELECT * FROM roles"
-function addDepartment() {} //"INSERT INTO departments SET ?",
+// function viewDepartments() {
+//   //"SELECT * FROM departments"
+
+//   connection.query("SELECT * FROM departments", (err, result) => {
+//     if (err) throw err;
+
+//     console.table(result);
+
+//     mainMenu();
+//   });
+
+//}
+function viewDepartments() {
+  connection.query("SELECT * FROM departments", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    mainMenu();
+  });
+}
+
+function viewRoles() {
+  //"SELECT * FROM roles"
+  connection.query("SELECT * FROM roles;", (err, result) => {
+    if (err) throw err;
+
+    console.table(result);
+
+    mainMenu();
+  });
+}
+
+function addDepartment() {
+  return inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What department name would you like to add?",
+        name: "department",
+      },
+    ])
+    .then((answer) => {
+      connection.query(
+        "insert into departments set ?",
+        { name: answer.department },
+        (err, result) => {
+          if (err) throw err;
+          console.log("department is added");
+
+          mainMenu();
+        }
+      );
+    });
+} //"INSERT INTO departments SET ?",
 function addRole() {} //"INSERT INTO roles SET ?"
 function addEmployee() {} //"INSERT INTO employees SET ?",
 function updateEmployees() {} //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
