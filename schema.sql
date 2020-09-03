@@ -41,7 +41,7 @@ CREATE TABLE departments
     role_id VARCHAR
             (30) NOT NULL, 
     manager_id VARCHAR
-            (30) NOT NULL,
+            (30) NULL,
     PRIMARY KEY
             (id)
 );
