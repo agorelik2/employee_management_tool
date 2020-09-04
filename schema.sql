@@ -5,7 +5,7 @@ DROP DATABASE IF EXISTS employee_mng_DB;
 CREATE DATABASE employee_mng_DB;
 USE employee_mng_DB;
 
-/* Create new table with a primary key that auto-increments, and a text field */
+/* Create table departments with a primary key that auto-increments */
 CREATE TABLE departments
 (
         id INT NOT NULL
@@ -17,6 +17,7 @@ CREATE TABLE departments
         (id)    
 );
 
+        /* Create table roles with a primary key that auto-increments */
         CREATE TABLE roles
         (
                 id INT NOT NULL
@@ -33,6 +34,7 @@ CREATE TABLE departments
                 (id)                
 );
 
+                /* Create table employees with a primary key that auto-increments */
                 CREATE TABLE employees
                 (
                         id INT NOT NULL

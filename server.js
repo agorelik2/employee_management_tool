@@ -97,26 +97,39 @@ function mainMenu() {
     });
 }
 
-function viewEmployees() {} //"SELECT * FROM employees"
-// function viewDepartments() {
-//   //"SELECT * FROM departments"
+function viewEmployees() {
+  connection.query(
+    "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = departments.id LEFT JOIN employees manager on manager.id = employees.manager_id;",
+    (err, result) => {
+      if (err) throw err;
 
-//   connection.query("SELECT * FROM departments", (err, result) => {
-//     if (err) throw err;
+      // Clean up results to display as table.
+      console.table(result);
 
-//     console.table(result);
+      mainMenu();
+    }
+  );
+}
 
-//     mainMenu();
-//   });
-
-//}
+//"SELECT * FROM employees"
 function viewDepartments() {
-  connection.query("SELECT * FROM departments", function (err, res) {
+  //"SELECT * FROM departments"
+
+  connection.query("SELECT * FROM departments", (err, result) => {
     if (err) throw err;
-    console.table(res);
+
+    console.table(result);
+
     mainMenu();
   });
 }
+// function viewDepartments() {
+//   connection.query("SELECT * FROM departments", function (err, res) {
+//     if (err) throw err;
+//     console.table(res);
+//     mainMenu();
+//   });
+// }
 
 function viewRoles() {
   //"SELECT * FROM roles"

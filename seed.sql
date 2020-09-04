@@ -35,23 +35,22 @@ values
 insert into employees
     (first_name, last_name, role_id, manager_id)
 values
-    ("Jeff", "Chen", 1, 101);
+    ("Jeff", "Chen", 2, 1);
 
 insert into employees
     (first_name, last_name, role_id, manager_id)
 values
-    ("James", "Brynn", 2, null);
+    ("James", "Brynn", 3, null);
 
 insert into employees
     (first_name, last_name, role_id, manager_id)
 values
-    ("Alina", "Gorelik", 2, 320);
+    ("Alina", "Gorelik", 4, 3);
 
 insert into employees
     (first_name, last_name, role_id, manager_id)
 values
-    ("John", "Doe", 3, null);
-
+    ("John", "Doe", 5, null);
 
 
 
