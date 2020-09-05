@@ -215,7 +215,15 @@ function addRole() {
   });
 } //"INSERT INTO roles SET ?"
 
-function addEmployee() {} //"INSERT INTO employees SET ?",
+function addEmployee() {
+  connection.query(
+    "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = departments.id LEFT JOIN employees manager on manager.id = employees.manager_id;",
+    function (err, res) {
+      if (err) throw err;
+      console.table(res);
+    }
+  );
+} //"INSERT INTO employees SET ?",
 function updateEmployees() {} //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
 function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id"
 function updateEmployeesManager() {}
