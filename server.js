@@ -146,8 +146,8 @@ function addDepartment() {
   connection.query("SELECT * FROM departments", function (err, res) {
     if (err) throw err;
     console.table(res);
-    let deptArray = [];
-    deptArray.push(res[0].name);
+    // let deptArray = [];
+    // deptArray.push(res[0].name);
     return inquirer
       .prompt([
         {
@@ -175,8 +175,9 @@ function addRole() {
   connection.query("SELECT * FROM roles", function (err, res) {
     if (err) throw err;
     console.table(res);
-    let titleArray = [];
-    titleArray.push(res[0].title);
+    // let titleArray = [];
+    // titleArray.push(res[0].title);
+    // console.log(`Response title ${res[0].title}`);
     inquirer
       .prompt([
         {
