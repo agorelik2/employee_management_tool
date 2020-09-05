@@ -143,28 +143,77 @@ function viewRoles() {
 }
 
 function addDepartment() {
-  return inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "What department name would you like to add?",
-        name: "department",
-      },
-    ])
-    .then((answer) => {
-      connection.query(
-        "insert into departments set ?",
-        { name: answer.department },
-        (err, result) => {
-          if (err) throw err;
-          console.log("department is added");
+  connection.query("SELECT * FROM departments", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    let deptArray = [];
+    deptArray.push(res[0].name);
+    return inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What department name would you like to add?",
+          name: "department",
+        },
+      ])
+      .then((answer) => {
+        connection.query(
+          "insert into departments set ?",
+          { name: answer.department },
+          (err, result) => {
+            if (err) throw err;
+            console.log(`You have added the dept ${answer.department}`);
 
-          mainMenu();
-        }
-      );
-    });
+            mainMenu();
+          }
+        );
+      });
+  });
 } //"INSERT INTO departments SET ?",
-function addRole() {} //"INSERT INTO roles SET ?"
+
+function addRole() {
+  connection.query("SELECT * FROM roles", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    let titleArray = [];
+    titleArray.push(res[0].title);
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "What is the title of the role you would like to create?",
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the salary for this role?",
+        },
+        {
+          name: "department_id",
+          type: "input",
+          message: "What is the department id for this role?",
+        },
+      ])
+      .then(function (answer) {
+        console.log(`You have added the role ${answer.title}`);
+        connection.query(
+          "INSERT INTO roles SET ?",
+          {
+            title: answer.title,
+            salary: answer.salary,
+            department_id: answer.department_id,
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.table(res.affectedRows);
+            mainMenu();
+          }
+        );
+      });
+  });
+} //"INSERT INTO roles SET ?"
+
 function addEmployee() {} //"INSERT INTO employees SET ?",
 function updateEmployees() {} //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
 function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id"
