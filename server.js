@@ -343,4 +343,52 @@ function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id
 function updateEmployeesManager() {}
 function deleteDepartment() {}
 function deleteRole() {}
-function deleteEmployee() {}
+function deleteEmployee() {
+  const query = `
+    SELECT id, concat(employees.first_name, " ", employees.last_name) AS employee_full_name
+    FROM employees ;`;
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    //extract employee names and ids
+    let employees = [];
+    let employeesNames = [];
+    for (let i = 0; i < res.length; i++) {
+      employees.push({
+        id: res[i].id,
+        fullName: res[i].employee_full_name,
+      });
+      employeesNames.push(res[i].employee_full_name);
+    }
+    //prompt for employee to delete
+    inquirer
+      .prompt({
+        type: "list",
+        name: "employeePromptChoice",
+        message: "Select employee to delete:",
+        choices: employeesNames,
+      })
+      .then((answer) => {
+        //get rid of chosen employee
+        const chosenEmployee = answer.employeePromptChoice;
+        let chosenEmployeeID;
+        for (let i = 0; i < employees.length; i++) {
+          if (employees[i].fullName === chosenEmployee) {
+            chosenEmployeeID = employees[i].id;
+            // console.log(
+            //   `Chosen Employee ${chosenEmployee} with id ${chosenEmployeeID}`
+            // );
+            break;
+          }
+        }
+        const query = "DELETE FROM employees WHERE ?";
+        connection.query(query, { id: chosenEmployeeID }, (err, res) => {
+          if (err) throw err;
+          console.log(
+            `Employee ${chosenEmployee} with id = ${chosenEmployeeID} is deleted`
+          );
+
+          mainMenu();
+        });
+      });
+  });
+}
