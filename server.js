@@ -341,7 +341,50 @@ function addEmployee() {
 function updateEmployees() {} //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
 function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id"
 function updateEmployeesManager() {}
-function deleteDepartment() {}
+function deleteDepartment() {
+  const query = `
+    SELECT id, departments.name FROM departments;`;
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    //extract department names to array
+    const departments = [];
+    const departmentsNames = [];
+    for (let i = 0; i < res.length; i++) {
+      departments.push({
+        id: res[i].id,
+        name: res[i].name,
+      });
+      departmentsNames.push(res[i].name);
+    }
+    //prompt for department to delete
+    inquirer
+      .prompt({
+        type: "list",
+        name: "departmentsPromptChoice",
+        message: "Select Department to delete",
+        choices: departmentsNames,
+      })
+      .then((answer) => {
+        //find department's id based on the chosen department's name
+        const chosenDepartment = answer.departmentsPromptChoice;
+        let chosenDepartmentId;
+        for (let i = 0; i < departments.length; i++) {
+          if (departments[i].name === chosenDepartment) {
+            chosenDepartmentId = departments[i].id;
+            break;
+          }
+        }
+        //get id of chosen department
+        const query = "DELETE FROM departments WHERE ?";
+        connection.query(query, { id: chosenDepartmentId }, (err, res) => {
+          if (err) throw err;
+          console.log(`Department ${chosenDepartment} is deleted`);
+          mainMenu();
+        });
+      });
+  });
+}
 function deleteRole() {}
 function deleteEmployee() {
   const query = `
@@ -368,7 +411,7 @@ function deleteEmployee() {
         choices: employeesNames,
       })
       .then((answer) => {
-        //get rid of chosen employee
+        //find employee's id based on the chosen employee's name
         const chosenEmployee = answer.employeePromptChoice;
         let chosenEmployeeID;
         for (let i = 0; i < employees.length; i++) {
@@ -380,6 +423,7 @@ function deleteEmployee() {
             break;
           }
         }
+        //get rid of chosen employee
         const query = "DELETE FROM employees WHERE ?";
         connection.query(query, { id: chosenEmployeeID }, (err, res) => {
           if (err) throw err;
