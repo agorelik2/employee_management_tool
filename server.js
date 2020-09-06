@@ -175,14 +175,22 @@ function addDepartment() {
 } //"INSERT INTO departments SET ?",
 
 function addRole() {
+  const departmentsName = [];
   connection.query(
     "SELECT roles.id, roles.title, roles.salary, departments.name AS department, departments.id AS department_id FROM roles INNER JOIN departments ON roles.department_id = departments.id",
     function (err, res) {
       if (err) throw err;
+      // connection.query(`SELECT id, name FROM departments`, function (
+      //   err_dep,
+      //   res_dep
+      // ) {
+      //   if (err_dep) throw err_dep;
+      //   for (let i = 0; i < res_dep.length; i++) {
+      //     departmentsName.push(res_dep[i].name);
+      //   }
+
       console.table(res);
-      // let titleArray = [];
-      // titleArray.push(res[0].title);
-      // console.log(`Response title ${res[0].title}`);
+
       inquirer
         .prompt([
           {
@@ -200,25 +208,83 @@ function addRole() {
             type: "input",
             message: "What is the department id for this role?",
           },
+          // {
+          //   name: "roleDept",
+          //   type: "list",
+          //   message: "Select department for the role:",
+          //   choices: departmentsName,
+          // },
         ])
-        .then(function (answer) {
-          console.log(`You have added the role ${answer.title}`);
+        .then((answer) => {
+          // let deptID = departments.find((obj) => obj.name === answer.roleDept)
+          //   .id;
+
           connection.query(
             "INSERT INTO roles SET ?",
             {
               title: answer.title,
               salary: answer.salary,
               department_id: answer.department_id,
+              // department_id: deptID,
             },
             function (err, res) {
               if (err) throw err;
               console.table(res.affectedRows);
+              console.log(
+                `You have added the role ${answer.title} to the ${answer.department_id}`
+              );
               mainMenu();
             }
           );
         });
     }
   );
+}
+
+function addDepartment() {
+  connection.query("SELECT * FROM departments", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    let deptArray = [];
+    deptArray.push(res[0].name);
+    inquirer
+      .prompt([
+        {
+          name: "id",
+          type: "input",
+          message: "What is the id of the department you would like to create?",
+        },
+        {
+          name: "name",
+          type: "input",
+          message:
+            "What is the name of the department you would like to create?",
+        },
+      ])
+      .then(function (answer) {
+        console.log(`You have added the dept ${answer.dept}`);
+        connection.query(
+          "INSERT INTO departments SET ?",
+          {
+            id: answer.id,
+            name: answer.name,
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.table(res.affectedRows);
+            start();
+          }
+        );
+      });
+  });
+}
+
+function viewAllEmployees() {
+  connection.query("SELECT * FROM employee", function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    start();
+  });
 } //"INSERT INTO roles SET ?"
 
 function addEmployee() {
