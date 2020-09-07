@@ -22,35 +22,25 @@ CREATE TABLE departments
         (
                 id INT NOT NULL
                 AUTO_INCREMENT,
-  title VARCHAR
+    title VARCHAR
                 (30) NOT NULL,
-  salary DECIMAL
-                (10,2) NOT NULL,
-  department_id INT NOT NULL,
-  PRIMARY KEY
-                (id),
-  FOREIGN KEY
-                (department_id) REFERENCES departments
-                (id)                
+    salary DECIMAL NOT NULL,
+    department_id INT NOT NULL,
+    PRIMARY KEY
+                (id)
 );
 
                 /* Create table employees with a primary key that auto-increments */
                 CREATE TABLE employees
                 (
                         id INT NOT NULL
-                        AUTO_INCREMENT, 
+                        AUTO_INCREMENT,
     first_name VARCHAR
-                        (30) NOT NULL, 
-    last_name  VARCHAR
-                        (30) NOT NULL, 
-    role_id int not null,
-    manager_id int null,
+                        (30) NOT NULL,
+    last_name VARCHAR
+                        (30) NOT NULL,
+    role_id INT NOT NULL,
+    manager_id INT NULL,
     PRIMARY KEY
-                        (id),
-    FOREIGN KEY
-                        (role_id) REFERENCES roles
-                        (id),
-    FOREIGN KEY
-                        (manager_id) REFERENCES roles
                         (id)
 );

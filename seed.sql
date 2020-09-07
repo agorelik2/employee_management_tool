@@ -1,56 +1,44 @@
 -- Populate departments TABLE first
 INSERT INTO departments
-    (name, department_id)
+    (id, name)
 VALUES
-    ('Sales', 2),
-    ('Engineering', 3),
-    ('Accounting', 4),
-    ('Finance', 5),
-    ('Legal', 6);
-
-SET FOREIGN_KEY_CHECKS
-= 0;
+    (1, "Management"),
+    (2, "Sales"),
+    (3, "Engineering"),
+    (4, "Accounting"),
+    (5, "Finance"),
+    (6, "Legal");
 
 -- Populate roles TABLE
 INSERT INTO roles
-    (title, salary, department_id)
+    (id, title, salary, department_id)
 VALUES
-    ('Sales Lead', 150000, 2),
-    ('Salesperson', 56000, 2),
-    ('Lead Engineer', 186000, 3),
-    ('Software Engineer', 125000, 3),
-    ('Account Manager', 90000, 4),
-    ('Accountant', 48000, 4),
-    ('Financial Manager', 130000, 5),
-    ('Financial Analyst', 58000, 5),
-    ('Legal Team Lead', 200000, 6),
-    ('Lawyer', 170000, 6);
+    (1, "CEO", 120000, 1),
+    (2, "Product Manager", 90000, 1),
+    (3, 'Sales Lead', 150000, 2),
+    (4, 'Salesperson', 56000, 2),
+    (5, 'Lead Engineer', 186000, 3),
+    (6, 'Software Engineer', 125000, 3),
+    (7, 'Account Manager', 90000, 4),
+    (8, 'Accountant', 48000, 4),
+    (9, 'Financial Manager', 130000, 5),
+    (10, 'Financial Analyst', 58000, 5),
+    (11, 'Legal Team Lead', 200000, 6),
+    (12, 'Lawyer', 170000, 6);
 
 --Populate employees table
-insert into employees
-    (first_name, last_name, role_id, manager_id)
-values
-    ("Alex", "Smith", 1, null );
-
-insert into employees
-    (first_name, last_name, role_id, manager_id)
-values
-    ("Jeff", "Chen", 2, 1);
-
-insert into employees
-    (first_name, last_name, role_id, manager_id)
-values
-    ("James", "Brynn", 3, null);
-
-insert into employees
-    (first_name, last_name, role_id, manager_id)
-values
-    ("Alina", "Gorelik", 4, 3);
-
-insert into employees
-    (first_name, last_name, role_id, manager_id)
-values
-    ("John", "Doe", 5, null);
-
-
-
+INSERT INTO employees
+    (id, first_name, last_name, role_id, manager_id)
+VALUES
+    (1, "John", "Boss", 1, 1),
+    (2, "Joe", "Bodune", 2, 1),
+    (3, "Kent", "Roof", 3, 2),
+    (4, "Meg", "Plawn", 4, 3),
+    (5, "Will", "Smith", 5, 1),
+    (6, "Kaleb", "Young", 6, 5),
+    (7, "Kate", "Flip", 7, 1),
+    (8, "Magie", "Cosmo", 8 , 7),
+    (9, "Michael", "Assets", 9, 1),
+    (10, "Kim", "Cross", 12, 11),
+    (11, "Alina", "Gorelik", 11, 1),
+    (12, "Peter", "Lastoskie", 10, 9);
