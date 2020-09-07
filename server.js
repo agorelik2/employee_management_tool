@@ -175,70 +175,80 @@ function addDepartment() {
 } //"INSERT INTO departments SET ?",
 
 function addRole() {
+  const departments = [];
   const departmentsName = [];
-  connection.query(
-    "SELECT roles.id, roles.title, roles.salary, departments.name AS department, departments.id AS department_id FROM roles INNER JOIN departments ON roles.department_id = departments.id",
-    function (err, res) {
-      if (err) throw err;
-      // connection.query(`SELECT id, name FROM departments`, function (
-      //   err_dep,
-      //   res_dep
-      // ) {
-      //   if (err_dep) throw err_dep;
-      //   for (let i = 0; i < res_dep.length; i++) {
-      //     departmentsName.push(res_dep[i].name);
-      //   }
-
-      console.table(res);
-
-      inquirer
-        .prompt([
-          {
-            name: "title",
-            type: "input",
-            message: "What is the title of the role you would like to create?",
-          },
-          {
-            name: "salary",
-            type: "input",
-            message: "What is the salary for this role?",
-          },
-          {
-            name: "department_id",
-            type: "input",
-            message: "What is the department id for this role?",
-          },
-          // {
-          //   name: "roleDept",
-          //   type: "list",
-          //   message: "Select department for the role:",
-          //   choices: departmentsName,
-          // },
-        ])
-        .then((answer) => {
-          // let deptID = departments.find((obj) => obj.name === answer.roleDept)
-          //   .id;
-
-          connection.query(
-            "INSERT INTO roles SET ?",
-            {
-              title: answer.title,
-              salary: answer.salary,
-              department_id: answer.department_id,
-              // department_id: deptID,
-            },
-            function (err, res) {
-              if (err) throw err;
-              console.table(res.affectedRows);
-              console.log(
-                `You have added the role ${answer.title} to the ${answer.department_id}`
-              );
-              mainMenu();
-            }
-          );
-        });
+  //sql query
+  const query = `SELECT roles.id AS id, roles.title AS title, roles.salary AS salary, departments.name AS department, departments.id AS department_id FROM roles INNER JOIN departments ON roles.department_id = departments.id`;
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    for (let i = 0; i < res.length; i++) {
+      departments.push({
+        id: res[i].department_id,
+        name: res[i].department,
+      });
+      departmentsName.push({
+        name: `${res[i].department}`,
+        value: `${res[i].department}`,
+      });
     }
-  );
+
+    inquirer
+      .prompt([
+        {
+          name: "title",
+          type: "input",
+          message: "What is the title of the role you would like to create?",
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the salary for this role?",
+        },
+        // {
+        //   name: "department_id",
+        //   type: "input",
+        //   message: "What is the department id for this role?",
+        // },
+        {
+          name: "roleDept",
+          type: "rawlist",
+          message: "Select department for the role:",
+          choices: departmentsName,
+        },
+      ])
+      .then((answer) => {
+        // let deptID = departments.find((obj) => obj.name === answer.roleDept)
+        //   .id;
+        //find an id of the role to be deleted
+        const chosenDept = answer.roleDept;
+        //console.log("Chosen Role here: " + chosenRole);
+        let chosenDeptID;
+        for (let i = 0; i < departments.length; i++) {
+          if (departments[i].name === chosenDept) {
+            chosenDeptID = departments[i].id;
+            break;
+          }
+        }
+        connection.query(
+          "INSERT INTO roles SET ?",
+          {
+            title: answer.title,
+            salary: answer.salary,
+            department_id: chosenDeptID,
+            // department_id: deptID,
+          },
+          function (err, res) {
+            if (err) throw err;
+            console.table(res.affectedRows);
+            console.log(
+              `You have added the role ${answer.title} to the ${chosenDept}`
+            );
+            mainMenu();
+          }
+        );
+      });
+  });
 }
 
 function addDepartment() {
@@ -280,7 +290,7 @@ function addDepartment() {
 }
 
 function viewAllEmployees() {
-  connection.query("SELECT * FROM employee", function (err, res) {
+  connection.query("SELECT * FROM employees", function (err, res) {
     if (err) throw err;
     console.table(res);
     mainMenu();
@@ -444,9 +454,11 @@ function deleteRole() {
 }
 
 function deleteEmployee() {
-  const query = `
-    SELECT id, concat(employees.first_name, " ", employees.last_name) AS employee_full_name
-    FROM employees ;`;
+  // const query = `
+  //   SELECT id, concat(employees.first_name, " ", employees.last_name) AS employee_full_name
+  //   FROM employees ;`;
+  const query = ` 
+    SELECT employees.id AS id, concat(employees.first_name, " ", employees.last_name) AS employee_full_name, roles.title AS title FROM employees INNER JOIN roles ON employees.role_id = roles.id;`;
   connection.query(query, (err, res) => {
     if (err) throw err;
     //extract employee names and ids
@@ -457,12 +469,16 @@ function deleteEmployee() {
         id: res[i].id,
         fullName: res[i].employee_full_name,
       });
-      employeesNames.push(res[i].employee_full_name);
+      // employeesNames.push(res[i].employee_full_name);
+      employeesNames.push({
+        name: `${res[i].employee_full_name} ---> ${res[i].title}`,
+        value: `${res[i].employee_full_name}`,
+      });
     }
     //prompt for employee to delete
     inquirer
       .prompt({
-        type: "list",
+        type: "rawlist",
         name: "employeePromptChoice",
         message: "Select employee to delete:",
         choices: employeesNames,
