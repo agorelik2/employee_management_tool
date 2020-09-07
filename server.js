@@ -272,7 +272,7 @@ function addDepartment() {
           function (err, res) {
             if (err) throw err;
             console.table(res.affectedRows);
-            start();
+            mainMenu();
           }
         );
       });
@@ -283,7 +283,7 @@ function viewAllEmployees() {
   connection.query("SELECT * FROM employee", function (err, res) {
     if (err) throw err;
     console.table(res);
-    start();
+    mainMenu();
   });
 } //"INSERT INTO roles SET ?"
 
@@ -343,7 +343,7 @@ function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id
 function updateEmployeesManager() {}
 function deleteDepartment() {
   const query = `
-    SELECT id, departments.name FROM departments;`;
+    SELECT id, name FROM departments;`;
   connection.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
@@ -360,9 +360,9 @@ function deleteDepartment() {
     //prompt for department to delete
     inquirer
       .prompt({
-        type: "list",
+        type: "rawlist",
         name: "departmentsPromptChoice",
-        message: "Select Department to delete",
+        message: "Select Department to Delete:",
         choices: departmentsNames,
       })
       .then((answer) => {
@@ -375,7 +375,7 @@ function deleteDepartment() {
             break;
           }
         }
-        //get id of chosen department
+        //delete the chosen department
         const query = "DELETE FROM departments WHERE ?";
         connection.query(query, { id: chosenDepartmentId }, (err, res) => {
           if (err) throw err;
@@ -385,7 +385,64 @@ function deleteDepartment() {
       });
   });
 }
-function deleteRole() {}
+function deleteRole() {
+  // const query = `
+  //   SELECT id, title FROM roles;`;
+  const query = `
+    SELECT roles.id AS id, roles.title AS title, departments.name AS department FROM roles INNER JOIN departments ON roles.department_id = departments.id;`;
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    //extract roles ids and titles to array roles, just titles to array rolesNames
+    const roles = [];
+    const rolesNames = [];
+    for (let i = 0; i < res.length; i++) {
+      roles.push({
+        id: res[i].id,
+        title: res[i].title,
+      });
+
+      rolesNames.push({
+        name: `${res[i].title} in the ${res[i].department} Department`,
+        value: `${res[i].title}`,
+      });
+      // rolesNames.push(`${res[i].title} in the ${res[i].department} Department`);
+      //console.log(rolesNames[i]);
+    }
+    //prompt for role to be removed
+    inquirer
+      .prompt({
+        type: "rawlist",
+        name: "rolesPromptChoice",
+        message: "Select Role to Delete:",
+        choices: rolesNames,
+      })
+      .then((answer) => {
+        //find an id of the role to be deleted
+        const chosenRole = answer.rolesPromptChoice;
+        //console.log("Chosen Role here: " + chosenRole);
+        let chosenRoleID;
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].title === chosenRole) {
+            chosenRoleID = roles[i].id;
+            break;
+          }
+        }
+        // console.log(
+        //   `Chosen Role: ${chosenRole}, ChosenRoleID: ${chosenRoleID}`
+        // );
+
+        //get rid of the role
+        const query = "DELETE FROM roles WHERE ?";
+        connection.query(query, { id: chosenRoleID }, (err, res) => {
+          if (err) throw err;
+          console.log(`Role ${chosenRole} is DELETED`);
+          mainMenu();
+        });
+      });
+  });
+}
+
 function deleteEmployee() {
   const query = `
     SELECT id, concat(employees.first_name, " ", employees.last_name) AS employee_full_name
