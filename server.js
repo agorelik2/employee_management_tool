@@ -123,13 +123,6 @@ function viewDepartments() {
     mainMenu();
   });
 }
-// function viewDepartments() {
-//   connection.query("SELECT * FROM departments", function (err, res) {
-//     if (err) throw err;
-//     console.table(res);
-//     mainMenu();
-//   });
-// }
 
 function viewRoles() {
   //"SELECT * FROM roles"
