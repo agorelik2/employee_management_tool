@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-//const updateEmployees = require("./updateEmployees");
+
 //const crud = require("./crud");
 
 const connection = mysql.createConnection({
@@ -213,11 +213,8 @@ function addRole() {
         },
       ])
       .then((answer) => {
-        // let deptID = departments.find((obj) => obj.name === answer.roleDept)
-        //   .id;
-        //find an id of the role to be deleted
         const chosenDept = answer.roleDept;
-        //console.log("Chosen Role here: " + chosenRole);
+
         let chosenDeptID;
         for (let i = 0; i < departments.length; i++) {
           if (departments[i].name === chosenDept) {
@@ -231,7 +228,6 @@ function addRole() {
             title: answer.title,
             salary: answer.salary,
             department_id: chosenDeptID,
-            // department_id: deptID,
           },
           function (err, res) {
             if (err) throw err;
@@ -681,7 +677,6 @@ function updateEmployeesManager() {
             SELECT DISTINCT concat(manager.first_name, " ", manager.last_name) AS full_name, manager.id
             FROM employees
             LEFT JOIN employees AS manager ON manager.id = employees.manager_id`;
-        //WHERE employees.manager_id IS NOT NULL`;
 
         connection.query(query, (err, res) => {
           if (err) throw err;
