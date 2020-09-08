@@ -12,7 +12,7 @@ agorelik2
 
 Employee Management Tool
 
-## Table of Content
+# Table of Content
 
 - [Description](#description)
 - [User Story](#user_story)
@@ -31,7 +31,7 @@ Employee Management Tool
 
 The application is an interface that makes it easy for non-developers to view and interact with information stored in databases. Often these interfaces are known as Content Management Systems.
 
-## User Story
+# User Story
 
 ```
 As a business owner
@@ -39,7 +39,7 @@ I want to be able to view and manage the departments, roles, and employees in my
 So that I can organize and plan my business
 ```
 
-## Database
+# Database
 
 Using mySQL, designed the following database schema containing three tables:
 
@@ -65,7 +65,7 @@ Using mySQL, designed the following database schema containing three tables:
   - **role_id** - INT to hold reference to role employee has
   - **manager_id** - INT to hold reference to another employee that manager of the current employee. This field may be null if the employee has no manager
 
-## Functionality
+# Functionality
 
 The application utilizes node, inquirer, and MySQL. This is a command-line application that at a allows the user to:
 
@@ -81,7 +81,7 @@ The application utilizes node, inquirer, and MySQL. This is a command-line appli
 
 - Delete departments, roles, employees;
 
-## Installation
+# Installation
 
 To use this application:
 
@@ -97,7 +97,7 @@ To use this application:
 - Follow the prompts for addin employess, roles and departments
 - Select **QUIT** in the menu to end the application
 
-### Dependencies
+## Dependencies
 
 - Use the [MySQL](https://www.npmjs.com/package/mysql) NPM package to connect to your MySQL database and perform queries.
 
@@ -110,7 +110,7 @@ To use this application:
 - [VScode](https://code.visualstudio.com/)
 - [Gitbash](https://gitforwindows.org/)
 
-# Repo:
+## Repo:
 
 https://github.com/agorelik2/employee_management_tool
 
@@ -125,5 +125,3 @@ https://drive.google.com/file/d/1hzCtcGEVT6YszbkCVwTFWxWbMi0k_Lhw/view
 ## CopyRight
 
 Copyright 2020 &copy; Alina Gorelik
-
-[Table of Content](#Table-of-Content) --- [Back to Top](#Employee-Tracker) --- [Installation](#Installation)
