@@ -84,25 +84,35 @@ The application utilizes node, inquirer, and MySQL. This is a command-line appli
 
 # Screen Shots
 
-![Initial Menu](images/initial-menu.png)
+- Initial Menu with scroll down
+  ![Initial Menu](images/initial-menu.png)
 
-![View All Employees](images/view-all-empl.png)
+- View All Employees
+  ![View All Employees](images/view-all-empl.png)
 
-![View All Roles](images/view-all-roles-add-dept.png)
+- View All Roles and Add Department
+  ![View All Roles](images/view-all-roles-add-dept.png)
 
-![View Employees by Manager](images/view-emp-by-mng.png)
+- View Employees by Manager
+  ![View Employees by Manager](images/view-emp-by-mng.png)
 
-![Update Employee Role](images/update-employee-role.png)
+- Add New Employee
+  ![Add Employee](images/add-employee.png)
 
-![Update Employee Role 2](images/upd-emp-role-2.png)
+- Add New Department
+  ![Add Department](images/add-department.png)
 
-![Add Employee](images/add-employee.png)
+- Add New Role
+  ![Add Employee Role](images/add-role.png)
 
-![Add Department](images/add-department.png)
+- Add New Role (continue)
+  ![Add Employee Role 2](images/add-role-2.png)
 
-![Add Employee Role](images/add-role.png)
+- Update Employee Role
+  ![Update Employee Role](images/update-employee-role.png)
 
-![Add Employee Role 2](images/add-role-2.png)
+- Update Employee Role (continue)
+  ![Update Employee Role 2](images/upd-emp-role-2.png)
 
 # Installation
 
