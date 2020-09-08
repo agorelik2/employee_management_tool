@@ -44,7 +44,7 @@ So that I can organize and plan my business
 
 Using mySQL, designed the following database schema containing three tables:
 
-![Database Schema](Assets/schema.png)
+![Database Schema](images/schema.png)
 
 - **department**:
 
@@ -130,7 +130,8 @@ To use this application:
 - User will need to install Node.js on their computer.
 - Use `npm init` to build package.json and node_modules.
 - Use `npm install` to install all the dependencies, see [Dependencies](#dependencies) for the complete list
-- Use MySQL or MSSQL database, create the DB using the _schema.sql_ file, you can reciew the database schema on the [Sql schema](#schema) file
+- Use MySQL or MSSQL database, create the DB using the _schema.sql_ file, you can reciew the database schema on the schema file
+  ! [Sql schema](images/schema.png) file
 - Using the _seed.sql_ file to popluate the DB
 - Once you have all the above created, you can edit the _server.js_ file where the password is and add your password to access your local DataBase.
 - Open a terminal, navigate to the folder where **_server.js_** is located and type: `node server.js`
