@@ -150,21 +150,28 @@ function viewRoles() {
 // *** Add New Role ***
 //-----------------------------------------------
 function addRole() {
+  //sql query
+  const queryroles = `SELECT DISTINCT roles.id AS id, roles.title AS title, roles.salary AS salary, departments.name AS department, departments.id AS department_id FROM roles INNER JOIN departments ON roles.department_id = departments.id`;
+  connection.query(queryroles, (err_r, res_r) => {
+    if (err_r) throw err_r;
+    console.log(`Below are all the existing roles:`);
+    console.table(res_r);
+  });
+
   const departments = [];
   const departmentsName = [];
-  //sql query
-  const query = `SELECT DISTINCT roles.id AS id, roles.title AS title, roles.salary AS salary, departments.name AS department, departments.id AS department_id FROM roles INNER JOIN departments ON roles.department_id = departments.id`;
+  const query = `SELECT id, name FROM departments`;
   connection.query(query, (err, res) => {
     if (err) throw err;
-    console.table(res);
+    //console.table(res);
     for (let i = 0; i < res.length; i++) {
       departments.push({
-        id: res[i].department_id,
-        name: res[i].department,
+        id: res[i].id,
+        name: res[i].name,
       });
       departmentsName.push({
-        name: `${res[i].department}`,
-        value: `${res[i].department}`,
+        name: `${res[i].name}`,
+        value: `${res[i].name}`,
       });
     }
 
@@ -173,7 +180,8 @@ function addRole() {
         {
           name: "title",
           type: "input",
-          message: "What is the title of the role you would like to create?",
+          message:
+            "What is the Title of the NEW Role you would like to create?",
           validate: async function confirmStringInput(input) {
             var alphaExp = /^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$/;
             if (
@@ -197,15 +205,10 @@ function addRole() {
             return true;
           },
         },
-        // {
-        //   name: "department_id",
-        //   type: "input",
-        //   message: "What is the department id for this role?",
-        // },
         {
           name: "roleDept",
           type: "rawlist",
-          message: "Select department for the role:",
+          message: "Select Department for the New Role:",
           choices: departmentsName,
         },
       ])
