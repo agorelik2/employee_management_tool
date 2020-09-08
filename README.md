@@ -15,9 +15,10 @@ Employee Management Tool
 # Table of Content
 
 - [Description](#description)
-- [User Story](#user_story)
-- [Database Configuration](#database)
+- [User Story](#user-story)
+- [Database Configuration](#database-configuration)
 - [Functionality](#functionality)
+- [Screen Shots](#screen-shots)
 - [Installation](#installation)
 - [Dependencies](#dependencies)
 - [Tests](#tests)
@@ -39,7 +40,7 @@ I want to be able to view and manage the departments, roles, and employees in my
 So that I can organize and plan my business
 ```
 
-# Database
+# Database Configuration
 
 Using mySQL, designed the following database schema containing three tables:
 
@@ -80,6 +81,28 @@ The application utilizes node, inquirer, and MySQL. This is a command-line appli
 - Update employees manager;
 
 - Delete departments, roles, employees;
+
+# Screen Shots
+
+![Initial Menu](images/initial-menu.png)
+
+![View All Employees](images/view-all-empl.png)
+
+![View All Roles](images/view-all-roles-add-dept.png)
+
+![View Employees by Manager](images/view-emp-by-mng.png)
+
+![Update Employee Role](images/update-employee-role.png)
+
+![Update Employee Role 2](images/upd-emp-role-2.png)
+
+![Add Employee](images/add-employee.png)
+
+![Add Department](images/add-department.png)
+
+![Add Employee Role](images/add-role.png)
+
+![Add Employee Role 2](images/add-role-2.png)
 
 # Installation
 
