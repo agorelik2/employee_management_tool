@@ -163,7 +163,7 @@ function addRole() {
   const query = `SELECT id, name FROM departments`;
   connection.query(query, (err, res) => {
     if (err) throw err;
-    //console.table(res);
+
     for (let i = 0; i < res.length; i++) {
       departments.push({
         id: res[i].id,
@@ -561,7 +561,10 @@ function updateEmployeesRoles() {
         });
       });
   });
-} //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
+}
+//-----------------------------------//
+// *** View Employees by Manager *** //
+//-----------------------------------//
 function viewEmployeesbyManager() {
   //sql query for managers
   const query = `
@@ -581,7 +584,7 @@ function viewEmployeesbyManager() {
         id: res[i].id,
         fullName: res[i].full_name,
       });
-      console.log(`${res[i].full_name}`);
+      //console.log(`${res[i].full_name}`);
     }
     //prompt for manager selection
     inquirer
@@ -602,25 +605,24 @@ function viewEmployeesbyManager() {
           }
         }
         //sql query to update manager
-        const query = `SELECT * FROM employees WHERE ?`;
-        connection.query(
-          query,
-          [
-            {
-              manager_id: chosenManagerID,
-            },
-          ],
-          (err, res) => {
-            if (err) throw err;
-            console.table(res);
+        //const query = `SELECT * FROM employees WHERE ?`;
 
+        connection.query(
+          `SELECT employees.id, employees.first_name, employees.last_name, roles.title, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN employees manager on manager.id = employees.manager_id where employees.manager_id = ${chosenManagerID}`,
+          (err, result) => {
+            if (err) throw err;
+            console.log(`Below is the list of employees and their managers:`);
+            console.table(result);
             mainMenu();
           }
         );
       });
   });
-} //"SELECT * FROM employees WHERE manager_id"
+}
 
+//-----------------------------------//
+// *** Update Employee's Manager *** //
+//-----------------------------------//
 function updateEmployeesManager() {
   connection.query(
     "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = departments.id LEFT JOIN employees manager on manager.id = employees.manager_id;",
