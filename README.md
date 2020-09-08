@@ -15,20 +15,29 @@ Employee Management Tool
 ## Table of Content
 
 - [Description](#description)
+- [User Story](#user_story)
 - [Database Configuration](#database)
-- [User Story](#functionality)
+- [Functionality](#functionality)
 - [Installation](#installation)
 - [Dependencies](#dependencies)
 - [Tests](#tests)
 - [Built With](#built-with)
 - [Repo](#repo)
-- [Developer](#developer)
 - [Demo](#demo)
+- [Developer](#developer)
 - [CopyRight](#copyright)
 
 # Description:
 
 The application is an interface that makes it easy for non-developers to view and interact with information stored in databases. Often these interfaces are known as Content Management Systems.
+
+## User Story
+
+```
+As a business owner
+I want to be able to view and manage the departments, roles, and employees in my company
+So that I can organize and plan my business
+```
 
 ## Database
 
@@ -77,7 +86,7 @@ The application utilizes node, inquirer, and MySQL. This is a command-line appli
 To use this application:
 
 - User will need to install Node.js on their computer.
-- Use `npm install` to build package.json and node_modules.
+- Use `npm init` to build package.json and node_modules.
 - Use `npm install` to install all the dependencies, see [Dependencies](#dependencies) for the complete list
 - Use MySQL or MSSQL database, create the DB using the _schema.sql_ file, you can reciew the database schema on the [Sql schema](#schema) file
 - Using the _seed.sql_ file to popluate the DB
@@ -90,19 +99,24 @@ To use this application:
 
 ### Dependencies
 
-- Inquirer
-- MYSQL
-- Console.table
+- Use the [MySQL](https://www.npmjs.com/package/mysql) NPM package to connect to your MySQL database and perform queries.
+
+- Use [InquirerJs](https://www.npmjs.com/package/inquirer/v/0.2.3) NPM package to interact with the user via the command-line.
+
+- Use [console.table](https://www.npmjs.com/package/console.table) to print MySQL rows to the console.
 
 ## Built With
 
-- [VScode](https://code.visualstudio.com/) - The editor of choice
-- [Notepad++](https://notepad-plus-plus.org/) - My second editor
-- [Gitbash](https://gitforwindows.org/) - What would we do without our bash?
+- [VScode](https://code.visualstudio.com/)
+- [Gitbash](https://gitforwindows.org/)
 
 # Repo:
 
 https://github.com/agorelik2/employee_management_tool
+
+## Demo:
+
+https://drive.google.com/file/d/1hzCtcGEVT6YszbkCVwTFWxWbMi0k_Lhw/view
 
 ## Developer
 
