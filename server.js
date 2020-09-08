@@ -562,9 +562,75 @@ function updateEmployeesRoles() {
       });
   });
 } //"UPDATE employees SET role_id = ? WHERE roles_id = ?",
-function viewEmployeesbyManager() {} //"SELECT * FROM employees WHERE manager_id"
+function viewEmployeesbyManager() {
+  //sql query for managers
+  const query = `
+  SELECT DISTINCT concat(manager.first_name, " ", manager.last_name) AS full_name, manager.id
+  FROM employees 
+  LEFT JOIN employees AS manager ON manager.id = employees.manager_id
+  WHERE employees.manager_id IS NOT NULL`;
+
+  connection.query(query, (err, res) => {
+    if (err) throw err;
+    //extract manager names and ids to arrays
+    const managers = [];
+    const managersNames = [];
+    for (let i = 0; i < res.length; i++) {
+      managersNames.push(res[i].full_name);
+      managers.push({
+        id: res[i].id,
+        fullName: res[i].full_name,
+      });
+      console.log(`${res[i].full_name}`);
+    }
+    //prompt for manager selection
+    inquirer
+      .prompt({
+        type: "list",
+        name: "managerPromptChoice",
+        message: "Select Manager:",
+        choices: managersNames,
+      })
+      .then((answer) => {
+        //get id of chosen manager
+        const chosenManager = answer.managerPromptChoice;
+        let chosenManagerID;
+        for (let i = 0; i < managers.length; i++) {
+          if (managers[i].fullName === chosenManager) {
+            chosenManagerID = managers[i].id;
+            break;
+          }
+        }
+        //sql query to update manager
+        const query = `SELECT * FROM employees WHERE ?`;
+        connection.query(
+          query,
+          [
+            {
+              manager_id: chosenManagerID,
+            },
+          ],
+          (err, res) => {
+            if (err) throw err;
+            console.table(res);
+
+            mainMenu();
+          }
+        );
+      });
+  });
+} //"SELECT * FROM employees WHERE manager_id"
 
 function updateEmployeesManager() {
+  connection.query(
+    "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.name AS department, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = departments.id LEFT JOIN employees manager on manager.id = employees.manager_id;",
+    (err, result) => {
+      if (err) throw err;
+      console.log(`Below is the list of employees and their managers:`);
+      console.table(result);
+    }
+  );
+
   //initialize updatedEmployee object
   const updatedEmployee = {
     id: 0,
