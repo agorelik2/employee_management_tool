@@ -114,6 +114,15 @@ The application utilizes node, inquirer, and MySQL. This is a command-line appli
 - Update Employee Role (continue)
   ![Update Employee Role 2](images/upd-emp-role-2.png)
 
+- Delete Department
+  ![Delete Department](images/delete-department.png)
+
+- Delete Role
+  ![Add Employee Role](images/delete-role.png)
+
+- Delete Employee
+  ![Add Employee Role 2](images/delete-empl-1.png)
+
 # Installation
 
 To use this application:
